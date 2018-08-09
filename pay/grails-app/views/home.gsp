@@ -23,14 +23,14 @@
 
     <p>Send a pay request to the server, then query the card's balance:<br>
         <code>
-            $ curl -X POST localhost:8080/pay -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "card",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardNumber": <card></card>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardCvv": 1234,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpYear": 45,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
-            $ curl localhost:8080/card/<card></card><br>
+            $ curl https://dummypay.io/card/<card></card><br>
             {"balance":10.00}
         </code>
     </p>
@@ -38,12 +38,12 @@
     <p>
         You can also do the same for banks:<br>
         <code>
-            $ curl -X POST localhost:8080/pay -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "bank",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"bankRouting": <bankR></bankR>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"bankAccount": <bankA></bankA>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
-            $ curl localhost:8080/bank/<bankR></bankR>/<bankA></bankA><br>
+            $ curl https://dummypay.io/bank/<bankR></bankR>/<bankA></bankA><br>
             {"balance":10.00}
         </code>
     </p>
@@ -53,13 +53,13 @@
     <p>
         Normally, you may pass any CVV or expiration date (provided the date is in the future) and the payment will go through. But if you'd like to test scenarios such as invalid CVV code, incorrect expiration date, or the card not existing at all, you'll have to override those details beforehand. You can also overwrite the balance as well:<br>
         <code>
-            $ curl -X PUT localhost:8080/card/<card></card> -H "Content-Type: application/json" --data '{<br>
+            $ curl -X PUT https://dummypay.io/card/<card></card> -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"exists": "false",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cvv": 1234,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"expMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"expYear": 45,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"balance": 60 }'<br>
-            $ curl -X POST localhost:8080/pay -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "card",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardNumber": <card></card>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardCvv": 1234,<br>
@@ -74,18 +74,18 @@
     
     <p>
         <code>
-            $ curl -X POST localhost:8080/save -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST https://dummypay.io/save -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "card",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardNumber": <card></card>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardCvv": 1234,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpYear": 45 }'<br>
             {"savedId":"53ce3555-d530-4843-8f04-80c138fe3f5b"}<br>
-            $ curl -X POST localhost:8080/pay -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "saved",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"savedId": "53ce3555-d530-4843-8f04-80c138fe3f5b",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
-            $ curl localhost:8080/card/<card></card><br>
+            $ curl https://dummypay.io/card/<card></card><br>
             {"balance":10.00}
         </code>
     </p>
@@ -95,14 +95,14 @@
     <p>
         If you feel that the number of available card numbers isn't enough, or you'd like to test a certain card number in particular you fear might cause collisions with other users, you have two options. The first option is to run your own DummyPay server, the second option is to provide an <code>Authorization</code> header:<br>
         <code>
-            $ curl -X POST -u root:<pass></pass> localhost:8080/pay -H "Content-Type: application/json" --data '{<br>
+            $ curl -X POST -u root:<pass></pass> https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "card",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardNumber": <card></card>,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardCvv": 1234,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpYear": 45,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
-            $ curl -u root:<pass></pass> localhost:8080/card/<card></card><br>
+            $ curl -u root:<pass></pass> https://dummypay.io/card/<card></card><br>
             {"balance":10.00}
         </code>
     </p>
