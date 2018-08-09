@@ -1,0 +1,7 @@
+model {
+	UUID savedId
+}
+
+json {
+	savedId savedId
+}

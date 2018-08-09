@@ -1,0 +1,9 @@
+import pay.Card
+
+model {
+	Card card
+}
+
+json {
+	balance card.balance
+}

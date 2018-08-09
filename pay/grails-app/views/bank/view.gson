@@ -1,0 +1,9 @@
+import pay.BankAccount
+
+model {
+	BankAccount bankAccount
+}
+
+json {
+	balance bankAccount.balance
+}
