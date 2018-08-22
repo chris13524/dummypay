@@ -39,7 +39,7 @@ class PayService {
 		
 		SimpleDateFormat yearDateFormat = new SimpleDateFormat("yy")
 		int nowYear = Integer.parseInt(yearDateFormat.format(Calendar.getInstance().getTime()))
-		SimpleDateFormat monthDataFormat = new SimpleDateFormat("mm")
+		SimpleDateFormat monthDataFormat = new SimpleDateFormat("MM")
 		int nowMonth = Integer.parseInt(monthDataFormat.format(Calendar.getInstance().getTime()))
 		if (nowYear > expYear ||
 				(nowYear == expYear && nowMonth > expMonth)) {
