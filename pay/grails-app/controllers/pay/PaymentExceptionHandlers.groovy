@@ -2,22 +2,22 @@ package pay
 
 trait PaymentExceptionHandlers {
 	def handleInvalidCardException(InvalidCardException e) {
-		response.sendError(470, "invalidCard")
+		response.sendError(402, "invalidCard")
 	}
 	
 	def handleInvalidRoutingException(InvalidRoutingException e) {
-		response.sendError(470, "invalidRouting")
+		response.sendError(402, "invalidRouting")
 	}
 	
 	def handleInvalidAccountException(InvalidAccountException e) {
-		response.sendError(470, "invalidAccount")
+		response.sendError(402, "invalidAccount")
 	}
 	
 	def handleExpiredException(ExpiredException e) {
-		response.sendError(470, "expired")
+		response.sendError(402, "expired")
 	}
 	
 	def handleDeclinedException(DeclinedException e) {
-		response.sendError(470, "declined")
+		response.sendError(402, "declined")
 	}
 }

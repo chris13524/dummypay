@@ -5,6 +5,7 @@ class UrlMappings {
 		"/"(view: "/home")
 		"500"(view: "/serverError/internalServerError")
 		"404"(view: "/clientError/notFound")
+		"402"(view: "/clientError/payment")
 		
 		get "/card/$cardNumber"(controller: "card", action: "view")
 		put "/card/$cardNumber"(controller: "card", action: "update")

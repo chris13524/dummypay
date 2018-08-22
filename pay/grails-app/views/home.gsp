@@ -66,7 +66,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpYear": 45,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
-            {"status":470, "message":"invalidCard"}
+            {"status":402, "message":"invalidCard"}
         </code>
     </p>
     
