@@ -38,10 +38,5 @@ class ExpirationService {
 				.forEach({ BankRouting bankRouting ->
 			bankRouting.delete(flush: true)
 		})
-		
-		Saved.findAllByCreatedLessThan(System.currentTimeSeconds() - Saved.EXPIRE_AFTER, [lock: true])
-				.forEach({ Saved saved ->
-			saved.delete(flush: true)
-		})
 	}
 }

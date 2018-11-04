@@ -10,7 +10,7 @@ class SavedController implements Validation, Tenant, ExceptionHandlers {
 	def save(SaveCommand cmd) {
 		validate(cmd)
 		
-		UUID savedId = savedService.save(tenant(), cmd)
+		String savedId = savedService.save(tenant(), cmd)
 		
 		response.status = 200
 		return [savedId: savedId]

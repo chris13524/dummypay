@@ -80,14 +80,19 @@
             &nbsp;&nbsp;&nbsp;&nbsp;"cardCvv": 1234,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpMonth": 11,<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"cardExpYear": 45 }'<br>
-            {"savedId":"53ce3555-d530-4843-8f04-80c138fe3f5b"}<br>
+            {"savedId":"{\"t\":\"card\",\"n\":<card></card>,\"c\":1234,\"m\":11,\"y\":45}"}<br>
             $ curl -X POST https://dummypay.io/pay -H "Content-Type: application/json" --data '{<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"type": "saved",<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;"savedId": "53ce3555-d530-4843-8f04-80c138fe3f5b",<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"savedId": "{\"t\":\"card\",\"n\":<card></card>,\"c\":1234,\"m\":11,\"y\":45}",<br>
             &nbsp;&nbsp;&nbsp;&nbsp;"amount": 10 }'<br>
             $ curl https://dummypay.io/card/<card></card><br>
             {"balance":10.00}
         </code>
+    </p>
+    
+    <p>
+        You will notice that the <code>savedId</code> actually contains the full credit card details. This is to allow
+        you to store a reference to this payment method for as long as you like.
     </p>
 
     <h3>Namespacing</h3>

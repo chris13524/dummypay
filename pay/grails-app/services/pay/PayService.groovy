@@ -2,6 +2,7 @@ package pay
 
 import grails.compiler.GrailsCompileStatic
 import grails.gorm.transactions.Transactional
+import groovy.json.JsonSlurper
 
 import java.text.SimpleDateFormat
 
@@ -64,15 +65,15 @@ class PayService {
 		bankAccount.save(flush: true)
 	}
 	
-	private void paySaved(String tenant, UUID savedId, BigDecimal amount) {
-		Saved saved = Saved.findByTenantAndSavedId(tenant, savedId)
+	private void paySaved(String tenant, String savedId, BigDecimal amount) {
+		Map saved = new JsonSlurper().parseText(savedId) as Map
 		
-		if (saved.type == "card") {
-			payCard(tenant, saved.cardNumber, saved.cardCvv, saved.cardExpMonth, saved.cardExpYear, amount)
-		} else if (saved.type == "bank") {
-			payBank(tenant, saved.bankRouting, saved.bankAccount, amount)
+		if (saved.t == "card") {
+			payCard(tenant, saved.n as Long, saved.c as Long, saved.m as Long, saved.y as Long, amount)
+		} else if (saved.t == "bank") {
+			payBank(tenant, saved.r as Long, saved.a as Long, amount)
 		} else {
-			throw new RuntimeException(saved.type)
+			throw new RuntimeException(saved.t as String)
 		}
 	}
 }

@@ -28,7 +28,7 @@ class PayCommand implements Validateable {
 	Long bankRouting
 	Long bankAccount
 	
-	UUID savedId
+	String savedId
 	
 	BigDecimal amount
 	
