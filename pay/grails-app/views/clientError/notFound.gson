@@ -1,4 +1,4 @@
 json {
 	status 404
-	message "Not Found"
+	message request.getAttribute("javax.servlet.error.message") ?: "Not Found"
 }

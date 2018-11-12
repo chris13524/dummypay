@@ -4,6 +4,7 @@ class UrlMappings {
 	static mappings = {
 		"/"(view: "/home")
 		"500"(view: "/serverError/internalServerError")
+		"400"(view: "/clientError/badRequest")
 		"404"(view: "/clientError/notFound")
 		"402"(view: "/clientError/payment")
 		

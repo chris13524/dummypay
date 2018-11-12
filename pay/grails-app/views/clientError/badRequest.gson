@@ -1,0 +1,4 @@
+json {
+	status 400
+	message request.getAttribute("javax.servlet.error.message") ?: "Bad Request"
+}

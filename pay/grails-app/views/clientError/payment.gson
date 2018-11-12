@@ -1,4 +1,4 @@
 json {
 	status 402
-	message request.getAttribute('javax.servlet.error.message')
+	message request.getAttribute("javax.servlet.error.message")
 }
