@@ -6,4 +6,5 @@ model {
 
 json {
 	balance bankAccount.balance
+	charges tmpl.bankCharge(bankAccount.charges)
 }

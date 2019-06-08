@@ -1,0 +1,11 @@
+import pay.BankCharge
+
+model {
+	BankCharge bankCharge
+}
+
+json {
+	chargeId bankCharge.chargeId
+	settledOn bankCharge.settledOn
+	settleStatus bankCharge.settleStatus
+}

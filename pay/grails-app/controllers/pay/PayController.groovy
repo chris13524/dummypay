@@ -10,9 +10,9 @@ class PayController implements Validation, Tenant, ExceptionHandlers, PaymentExc
 	def pay(PayCommand cmd) {
 		validate(cmd)
 		
-		payService.pay(tenant(), cmd)
+		String chargeId = payService.pay(tenant(), cmd)
 		
-		response.status = 204
+		return [chargeId: chargeId]
 	}
 }
 

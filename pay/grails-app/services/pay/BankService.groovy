@@ -18,12 +18,21 @@ class BankService {
 	
 	void updateRouting(BankRouting bankRouting, RoutingUpdateCommand cmd) {
 		if (cmd.exists != null) bankRouting.present = cmd.exists
+		if (cmd.deferErrors != null) bankRouting.deferErrors = cmd.deferErrors
 	}
 	
 	BankAccount lookupAccount(String tenant, long routing, long account, boolean lock = false) {
 		BankRouting bankRouting = lookupRouting(tenant, routing, lock)
 		
-		BankAccount bankAccount = BankAccount.findByTenantAndAccount(tenant, account, [lock: lock])
+		BankAccount bankAccount = null
+		if (bankRouting.bankAccounts != null) {
+			for (BankAccount _bankAccount : bankRouting.bankAccounts) {
+				if (_bankAccount.account == account) {
+					bankAccount = BankAccount.lock(_bankAccount.id)
+				}
+			}
+		}
+		
 		if (bankAccount == null) {
 			bankAccount = new BankAccount(tenant: tenant, account: account)
 			bankRouting.addToBankAccounts(bankAccount)
@@ -37,6 +46,7 @@ class BankService {
 	
 	void updateAccount(BankAccount bankAccount, AccountUpdateCommand cmd) {
 		if (cmd.exists != null) bankAccount.present = cmd.exists
+		if (cmd.deferErrors != null) bankAccount.deferErrors = cmd.deferErrors
 		if (cmd.balance != null) bankAccount.balance = cmd.balance
 	}
 }

@@ -14,6 +14,7 @@ class BankRouting {
 	
 	long routing
 	boolean present = true
+	boolean deferErrors = false
 	
 	static constraints = {
 		created nullable: false
@@ -22,5 +23,6 @@ class BankRouting {
 		
 		routing nullable: false
 		present nullable: false
+		deferErrors nullable: true
 	}
 }

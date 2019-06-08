@@ -12,19 +12,19 @@ class PayService {
 	CardService cardService
 	BankService bankService
 	
-	void pay(String tenant, PayCommand cmd) {
+	String pay(String tenant, PayCommand cmd) {
 		if (cmd.type == "card") {
-			payCard(tenant, cmd.cardNumber, cmd.cardCvv, cmd.cardExpMonth, cmd.cardExpYear, cmd.amount)
+			return payCard(tenant, cmd.cardNumber, cmd.cardCvv, cmd.cardExpMonth, cmd.cardExpYear, cmd.amount)
 		} else if (cmd.type == "bank") {
-			payBank(tenant, cmd.bankRouting, cmd.bankAccount, cmd.amount)
+			return payBank(tenant, cmd.bankRouting, cmd.bankAccount, cmd.amount)
 		} else if (cmd.type == "saved") {
-			paySaved(tenant, cmd.savedId, cmd.amount)
+			return paySaved(tenant, cmd.savedId, cmd.amount)
 		} else {
 			throw new RuntimeException(cmd.type)
 		}
 	}
 	
-	private void payCard(String tenant, long number, long cvv, long expMonth, long expYear, BigDecimal amount) {
+	private String payCard(String tenant, long number, long cvv, long expMonth, long expYear, BigDecimal amount) {
 		Card card = cardService.lookupCard(tenant, number, true)
 		
 		if (!card.present) {
@@ -49,29 +49,37 @@ class PayService {
 		
 		card.balance += amount
 		card.save(flush: true)
+		
+		return UUID.randomUUID().toString()
 	}
 	
-	private void payBank(String tenant, long routing, long account, BigDecimal amount) {
+	private String payBank(String tenant, long routing, long account, BigDecimal amount) {
 		BankAccount bankAccount = bankService.lookupAccount(tenant, routing, account, true)
 		
-		if (!bankAccount.bankRouting.present) {
+		if (!bankAccount.bankRouting.present && !bankAccount.bankRouting.deferErrors) {
 			throw new InvalidRoutingException()
 		}
-		if (!bankAccount.present) {
+		if (!bankAccount.present && !bankAccount.deferErrors) {
 			throw new InvalidAccountException()
 		}
 		
 		bankAccount.balance += amount
+		
+		BankCharge bankCharge = new BankCharge()
+		bankAccount.addToCharges(bankCharge)
+		
 		bankAccount.save(flush: true)
+		
+		return bankCharge.chargeId
 	}
 	
-	private void paySaved(String tenant, String savedId, BigDecimal amount) {
+	private String paySaved(String tenant, String savedId, BigDecimal amount) {
 		Map saved = new JsonSlurper().parseText(savedId) as Map
 		
 		if (saved.t == "card") {
-			payCard(tenant, saved.n as Long, saved.c as Long, saved.m as Long, saved.y as Long, amount)
+			return payCard(tenant, saved.n as Long, saved.c as Long, saved.m as Long, saved.y as Long, amount)
 		} else if (saved.t == "bank") {
-			payBank(tenant, saved.r as Long, saved.a as Long, amount)
+			return payBank(tenant, saved.r as Long, saved.a as Long, amount)
 		} else {
 			throw new RuntimeException(saved.t as String)
 		}

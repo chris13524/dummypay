@@ -1,0 +1,7 @@
+model {
+	String chargeId
+}
+
+json {
+	chargeId chargeId
+}

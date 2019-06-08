@@ -14,6 +14,9 @@ class UrlMappings {
 		get "/bank/$routingNumber/$accountNumber"(controller: "bank", action: "view")
 		put "/bank/$routingNumber"(controller: "bank", action: "updateRouting")
 		put "/bank/$routingNumber/$accountNumber"(controller: "bank", action: "updateAccount")
+		post "/bank/$routingNumber/$accountNumber/$chargeId"(controller: "bank", action: "settle")
+		
+		get "/settlement/$chargeId"(controller: "settlement", action: "view")
 		
 		post "/pay"(controller: "pay", action: "pay")
 		post "/save"(controller: "saved", action: "save")

@@ -14,8 +14,13 @@ class BankAccount {
 	
 	long account
 	boolean present = true
+	boolean deferErrors = false
 	
 	BigDecimal balance = 0
+	
+	static hasMany = [
+			charges: BankCharge
+	]
 	
 	static constraints = {
 		created nullable: false
@@ -24,6 +29,7 @@ class BankAccount {
 		
 		account nullable: false
 		present nullable: false
+		deferErrors nullable: true
 		
 		balance nullable: false
 	}
